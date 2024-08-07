@@ -1,36 +1,54 @@
 import { FormEvent, useEffect, useState } from "react";
 import MealForm from "../../components/meal-form";
-import { api } from "../../lib/axios";
 import { useNavigate, useParams } from "react-router-dom";
+import { useAppDispatch, useAppSelector } from "../../store";
+import { editMealHandler } from "../../store/slices/meals";
 
 const EditMeal = () => {
-  const [name, setName] = useState<string>("");
-  const [description, setDescription] = useState<string>("");
-  const [dateAndHour, setDateAndHour] = useState<string>("");
-  const [isOnDiet, setIsOnDiet] = useState<boolean>(false);
-
   const { id } = useParams();
+
+  const { mealName, mealDateAndHour, mealDescription, mealIsOnDiet } =
+    useAppSelector((state) => {
+      const meal = state.meals.find((item) => item.id === +id!);
+
+      const mealName = meal!.name;
+      const mealDescription = meal!.description;
+      const mealDateAndHour = meal!.date;
+      const mealIsOnDiet = meal!.isOnDiet;
+
+      return {
+        mealName,
+        mealDescription,
+        mealDateAndHour,
+        mealIsOnDiet,
+      };
+    });
+
+  const [name, setName] = useState<string>(mealName);
+  const [description, setDescription] = useState<string>(mealDescription);
+  const [dateAndHour, setDateAndHour] = useState<string>(mealDateAndHour);
+  const [isOnDiet, setIsOnDiet] = useState<boolean>(mealIsOnDiet);
+
   const navigate = useNavigate();
 
   const token = sessionStorage.getItem("test-token");
 
+  const dispatch = useAppDispatch();
+
   const editMeal = async (ev: FormEvent<HTMLFormElement>) => {
-    ev.preventDefault()
-    
-    await api.put(
-      `/meal/${id}`,
-      {
-        date: dateAndHour === "" ? new Date() : dateAndHour,
-        description,
-        isOnDiet,
-        name,
-        token,
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
+    ev.preventDefault();
+
+    dispatch(
+      editMealHandler({
+        id,
+        data: {
+          date: dateAndHour === "" ? new Date() : dateAndHour,
+          description,
+          isOnDiet,
+          name,
         },
-      }
+        token: token!,
+      })
     );
 
     navigate("/diet-details");

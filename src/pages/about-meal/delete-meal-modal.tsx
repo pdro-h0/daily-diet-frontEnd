@@ -3,10 +3,13 @@ import Button from "../../components/button";
 
 interface DeleteMealModalProps {
   setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  handleClick: () => void
+  handleClick: () => void;
 }
 
-const DeleteMealModal = ({ setIsModalOpen, handleClick }: DeleteMealModalProps) => {
+const DeleteMealModal = ({
+  setIsModalOpen,
+  handleClick,
+}: DeleteMealModalProps) => {
   return (
     <div className="inset-0 fixed bg-black/60 flex items-center justify-center ">
       <div className="bg-white pt-10 w-80 h-48 rounded-md space-y-8">
@@ -22,9 +25,7 @@ const DeleteMealModal = ({ setIsModalOpen, handleClick }: DeleteMealModalProps) 
           >
             Cancelar
           </button>
-          <Button 
-          onClick={handleClick}
-          className="-mb-0" type="button">
+          <Button onClick={handleClick} type="button">
             Sim, excluir
           </Button>
         </div>

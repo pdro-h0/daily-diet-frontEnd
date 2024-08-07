@@ -1,38 +1,36 @@
-import { useCallback, useEffect, useState } from "react";
-import { api } from "../../lib/axios";
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Statistics from "./statistics";
-import ArrowBack from "@mui/icons-material/ArrowBack";
+import { useAppDispatch, useAppSelector } from "../../store";
+import { fetchMealsStatistics } from "../../store/slices/statistics";
+import { ArrowBackIcon } from "@chakra-ui/icons";
 
 const MealsDetails = () => {
-  const [mealsCount, setMealsCount] = useState(0);
-  const [mealsInDiet, setMealsInDiet] = useState(0);
-  const [mealsOutOfDiet, setMealsOutOfDiet] = useState(0);
-  const [maxStreak, setMaxStreak] = useState(0);
-
   const navigate = useNavigate();
   const token = sessionStorage.getItem("test-token");
 
-  const fetchData = useCallback(async () => {
-    if (!token || token === "undefined") navigate("/");
+  const dispatch = useAppDispatch();
+  const { maxStreak, mealsCount, mealsInDiet, mealsOutOfDiet } = useAppSelector(
+    (state) => {
+      const mealsCount = state.statistics.mealsCount;
+      const maxStreak = state.statistics.maxStreak;
+      const mealsInDiet = state.statistics.mealsInDiet;
+      const mealsOutOfDiet = state.statistics.mealsOutOfDiet;
 
-    await api
-      .get("/me", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      .then((response) => {
-        setMealsCount(response.data.mealsCount);
-        setMealsInDiet(response.data.mealsInDiet);
-        setMealsOutOfDiet(response.data.mealsOutOfDiet);
-        setMaxStreak(response.data.maxStreak);
-      });
-  }, [navigate, token]);
+      return {
+        mealsCount,
+        maxStreak,
+        mealsInDiet,
+        mealsOutOfDiet,
+      };
+    }
+  );
 
   useEffect(() => {
-    fetchData();
-  }, [fetchData]);
+    if (!token || token === "undefined") navigate("/");
+
+    dispatch(fetchMealsStatistics(token));
+  }, [dispatch, token, navigate]);
 
   const displayPercentage = (mealsInDiet / mealsCount) * 100;
 
@@ -40,7 +38,8 @@ const MealsDetails = () => {
     <div>
       <div
         onClick={() => navigate("/diet-details")}
-        className={`${displayPercentage >= 50 ? "bg-lime-300" : "bg-red-300"
+        className={`${
+          displayPercentage >= 50 ? "bg-lime-300" : "bg-red-300"
         } w-full h-52 text-center py-5 relative`}
       >
         <span className="text-2xl text-center font-bold">
@@ -49,7 +48,7 @@ const MealsDetails = () => {
         <span className="text-lg block">das refeições dentro da dieta</span>
 
         <button className="size-6 absolute top-4 left-6">
-          <ArrowBack fontSize="medium" color="action" />
+          <ArrowBackIcon boxSize={25} />
         </button>
       </div>
 

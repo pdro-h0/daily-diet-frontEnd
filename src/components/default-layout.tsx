@@ -1,13 +1,13 @@
-import { Outlet, useNavigate } from 'react-router-dom';
-import ArrowBack from "@mui/icons-material/ArrowBack";
+import { Outlet, useNavigate } from "react-router-dom";
+import { ArrowBackIcon } from "@chakra-ui/icons";
 
-interface DefaultLayoutProps{
-    className: string
-    title: string
+interface DefaultLayoutProps {
+  className: string;
+  title: string;
 }
 
 const DefaultLayout = ({ className, title }: DefaultLayoutProps) => {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
 
   return (
     <div>
@@ -17,13 +17,13 @@ const DefaultLayout = ({ className, title }: DefaultLayoutProps) => {
           className="absolute top-4 left-6"
           onClick={() => navigate("/diet-details")}
         >
-          <ArrowBack fontSize="medium" color="action" />
+          <ArrowBackIcon boxSize={25} />
         </span>
       </h1>
 
       <Outlet />
     </div>
   );
-}
+};
 
-export default DefaultLayout
+export default DefaultLayout;

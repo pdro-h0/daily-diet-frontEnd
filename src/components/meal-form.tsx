@@ -67,7 +67,7 @@ const MealForm = (props: MealFormProps) => {
       </div>
 
       <h4>Está dentro da dieta?</h4>
-      <div className="flex justify-between">
+      <div className="flex justify-between max-xsm:flex-wrap gap-y-6">
         <button
           type="button"
           onClick={() => {
@@ -78,7 +78,7 @@ const MealForm = (props: MealFormProps) => {
             isActive && props.isOnDiet
               ? "bg-lime-200 border border-lime-500"
               : "bg-gray-200 border"
-          } py-2 px-12 rounded-md flex items-center gap-2`}
+          } py-2 px-12 rounded-md flex items-center gap-2 max-xsm:w-full justify-center `}
           name="isOnDiet"
         >
           <div className="rounded-full size-2 bg-lime-700" />
@@ -95,7 +95,7 @@ const MealForm = (props: MealFormProps) => {
             isActive && !props.isOnDiet
               ? "bg-red-400 border border-red-500"
               : "bg-gray-200 border"
-          } py-2 px-12 rounded-md flex items-center gap-2`}
+          } py-2 px-12 rounded-md flex items-center gap-2 max-xsm:w-full justify-center`}
         >
           <div className="rounded-full size-2 bg-red-700" />
           Não

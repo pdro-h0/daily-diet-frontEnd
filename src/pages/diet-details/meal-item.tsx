@@ -20,7 +20,7 @@ const MealItem = ({ meal }: mealItemProps) => {
       <div className="border border-gray-500 rounded-md mt-2 flex items-center px-4 h-12">
         <span className="font-bold">{format(meal.date, "HH:mm")}</span>
         <div className="h-[0.875rem] w-px mx-2 bg-gray-500" />
-        <span className="flex-1">{meal.name}</span>
+        <span className="flex-1 truncate">{meal.name}</span>
         <div
           className={`${
             meal.isOnDiet ? " bg-lime-400" : "bg-red-400"

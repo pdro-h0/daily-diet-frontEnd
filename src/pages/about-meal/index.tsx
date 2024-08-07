@@ -1,40 +1,32 @@
-import React, { useCallback } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { api } from "../../lib/axios";
-import { Meal } from "../diet-details";
 import { format } from "date-fns";
 import Button from "../../components/button";
 import DeleteMealModal from "./delete-meal-modal";
+import { useAppDispatch, useAppSelector } from "../../store";
+import { deleteMeal, fetchMeals, getMealById } from "../../store/slices/meals";
 
 const AboutMeal = () => {
-  const [meal, setMeal] = React.useState<Meal>();
-  const [isModalOpen, setIsModalOpen] = React.useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const { id } = useParams();
   const navigate = useNavigate();
 
+  const dispatch = useAppDispatch();
   const token = sessionStorage.getItem("test-token");
 
-  const fetchData = useCallback(async () => {
-    const response = await api.get(`/meal/${id}/user`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    setMeal(response.data.meal);
-  }, [id, token]);
-
-  React.useEffect(() => {
+  useEffect(() => {
     if (!token || token === "undefined") navigate("/");
-    fetchData();
-  }, [fetchData, navigate, token]);
+    dispatch(fetchMeals(token!));
+    dispatch(getMealById({ id: id!, token: token! }));
+  }, [dispatch, navigate, token, id]);
+
+  const meal = useAppSelector((state) =>
+    state.meals.find((item) => item.id === +id!)
+  );
 
   const handleDeleteMeal = async () => {
-    api.delete(`/meal/${id}`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    dispatch(deleteMeal({ token: token!, id: id! }));
     navigate("/diet-details");
   };
 
@@ -44,7 +36,7 @@ const AboutMeal = () => {
 
   return (
     <div className="rounded-t-3xl py-5 z-50 px-6 relative -mt-14 bg-white">
-      <h2 className="font-semibold text-2xl">{meal?.name}</h2>
+      <h2 className="font-semibold text-2xl break-words">{meal?.name}</h2>
       <p className="break-words mb-6">{meal?.description}</p>
 
       <h2 className="font-semibold text-lg">Data e hora</h2>
@@ -65,7 +57,11 @@ const AboutMeal = () => {
         </div>
 
         <div className="content-end h-full">
-          <Button onClick={() => navigate(`/edit-meal/${id}`)} type="button">
+          <Button
+            className="mb-2"
+            onClick={() => navigate(`/edit-meal/${id}`)}
+            type="button"
+          >
             Editar refeição
           </Button>
           <button

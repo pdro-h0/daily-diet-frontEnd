@@ -1,11 +1,12 @@
-import { useCallback, useEffect, useState } from "react";
+import { useEffect } from "react";
 import AddNewMeal from "./add-new-meal";
 import DietPercentage from "./diet-percentage";
 import Header from "./header";
 import MealItem from "./meal-item";
-import { api } from "../../lib/axios";
 import { format } from "date-fns";
 import { useNavigate } from "react-router-dom";
+import { useAppDispatch, useAppSelector } from "../../store";
+import { fetchMeals } from "../../store/slices/meals";
 
 export interface Meal {
   id: number;
@@ -17,27 +18,17 @@ export interface Meal {
 }
 
 const DietDetails = () => {
-  const [meals, setMeals] = useState<Meal[]>([]);
   const navigate = useNavigate();
 
   const token = sessionStorage.getItem("test-token");
 
-  const fetchData = useCallback(async () => {
-    await api
-      .get("/meal/user", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      .then((response) => {
-        setMeals(response.data.meals);
-      });
-  }, [token]);
+  const dispatch = useAppDispatch();
+  const meals = useAppSelector((state) => state.meals);
 
   useEffect(() => {
-    if(!token || token === "undefined") navigate("/");
-    fetchData();
-  }, [fetchData, token, navigate]);
+    if (!token || token === "undefined") navigate("/");
+    dispatch(fetchMeals(token!));
+  }, [dispatch, token, navigate]);
 
   if (!meals) return <h1>Não há refeiçoes ainda...</h1>;
 

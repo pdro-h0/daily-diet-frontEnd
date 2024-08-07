@@ -1,7 +1,8 @@
 import { useNavigate } from "react-router-dom";
 import MealForm from "../../components/meal-form";
 import { useState, FormEvent, useEffect } from "react";
-import { api } from "../../lib/axios";
+import { useAppDispatch } from "../../store";
+import { addMeal } from "../../store/slices/meals";
 
 const NewMeal = () => {
   const [name, setName] = useState<string>("");
@@ -13,23 +14,23 @@ const NewMeal = () => {
   const token = sessionStorage.getItem("test-token");
   const userId = token?.split(" ")[0];
 
+  const dispatch = useAppDispatch();
+
   const createMeal = async (ev: FormEvent<HTMLFormElement>) => {
     ev.preventDefault();
-    await api.post(
-      "/meal",
-      {
-        description,
-        isOnDiet,
-        name,
-        date: dateAndHour === "" ? new Date() : dateAndHour,
-        userId,
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
+    dispatch(
+      addMeal({
+        data: {
+          date: dateAndHour === "" ? new Date() : dateAndHour,
+          description,
+          isOnDiet,
+          name,
+          userId,
         },
-      }
+        token,
+      })
     );
+
     navigate("/diet-details");
   };
 
