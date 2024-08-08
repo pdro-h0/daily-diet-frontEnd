@@ -1,30 +1,60 @@
-# React + TypeScript + Vite
+<p align="center">
+Este projeto foi feito no desafio da Rocketseat. <br/>
+</p>
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+<p align="center">
+  <a href="#-tecnologias">Tecnologias</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+  <a href="#-projeto">Projeto</a>
+</p>
 
-Currently, two official plugins are available:
+<br>
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🤯 Demonstração
 
-## Expanding the ESLint configuration
+<p align="center">
+  <img alt="projeto Daily Diet" src=".github/preview.png" width="100%">
+</p>
+<p align="center">
+  <img alt="projeto Daily Diet" src=".github/preview2.png" width="100%">
+</p>
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## 🚀 Tecnologias
 
-- Configure the top-level `parserOptions` property like this:
+Esse projeto foi desenvolvido com as seguintes tecnologias:
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
+- React
+- Redux-Toolkit
+- Typescript
+- Tailwindcss
+- Chakra-Ui
+- Axios
+- Date-Fns
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+## 💻 Projeto
+
+Daily Diet é um projeto mobile full-stack. Nele eu realizei o front-end de uma aplicação para controle de dieta diária. [Link do back-end](https://github.com/pdro-h0/daily-diet-api)
+
+---
+
+## 🤔 Instruções
+### Primeiros passos:
+
+Primeiramente baixe o arquivo front-end no [GitHub](https://github.com/pdro-h0/daily-diet-frontEnd/tree/daily-diet-redux), no seu terminal, execute o seguinte comando na pasta raiz:
+
+`npm install`
+
+Depois baixe o arquivo back-end no [GitHub](https://github.com/pdro-h0/daily-diet-api), no seu terminal, execute o seguinte comando na pasta raiz:
+
+`npm install`
+
+### Variáveis de Ambiente:
+
+Para rodar o back-end, você vai precisar adicionar as seguintes variáveis de ambiente no seu .env
+
+`PORT=8080`
+`DATABASE_URL="file:./dev.db"`
+`JWT_SECRET=""`
+
+---
+
+Feito com ♥ by Pedro Henrique
