@@ -12,10 +12,10 @@ Este projeto foi feito no desafio da Rocketseat. <br/>
 ## 🤯 Demonstração
 
 <p align="center">
-  <img alt="projeto Daily Diet" src=".github/preview.png" width="100%">
+  <img alt="projeto Daily Diet" src=".github/preview.png" width="45%">
 </p>
 <p align="center">
-  <img alt="projeto Daily Diet" src=".github/preview2.png" width="100%">
+  <img alt="projeto Daily Diet" src=".github/preview2.png" width="45%">
 </p>
 
 ## 🚀 Tecnologias
